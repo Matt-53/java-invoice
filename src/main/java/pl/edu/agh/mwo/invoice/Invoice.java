@@ -8,7 +8,9 @@ import pl.edu.agh.mwo.invoice.product.Product;
 public class Invoice {
 //    private Collection<Product> products = new ArrayList<>();
     private Map<Product, Integer> products = new HashMap<>();
-
+    private BigDecimal netPrice;
+    private BigDecimal tax;
+    private BigDecimal grossPrice;
 
     public void addProduct(Product product) {
         // TODO: implement
@@ -24,14 +26,23 @@ public class Invoice {
     }
 
     public BigDecimal getNetPrice() {
-        return BigDecimal.ZERO;
+        if (netPrice == null) {
+            return BigDecimal.ZERO;
+        }
+        return netPrice;
     }
 
     public BigDecimal getTax() {
-        return BigDecimal.ZERO;
+        if (tax == null) {
+            return BigDecimal.ZERO;
+        }
+        return tax;
     }
 
     public BigDecimal getGrossPrice() {
-        return null;
+        if (grossPrice == null) {
+            return BigDecimal.ZERO;
+        }
+        return grossPrice;
     }
 }
