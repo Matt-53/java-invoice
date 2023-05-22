@@ -10,6 +10,7 @@ public class Invoice {
     private Map<Product, Integer> products = new HashMap<>();
     private static int nextNumber = 0;
     private final int number = ++nextNumber;
+    private int invoiceNumber;
 
     public void addProduct(Product product) {
         addProduct(product, 1);
@@ -46,5 +47,24 @@ public class Invoice {
 
     public int getNumber() {
         return number;
+    }
+
+    public void setInvoiceNumber(int invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
+    public void print() {
+        System.out.printf("Invoice nr: %d\n", invoiceNumber);
+
+        int counter = 1;
+        for (Product product : products.keySet()) {
+            BigDecimal quantity = new BigDecimal(products.get(product));
+            System.out.printf("Pos. %d: %s; Quantity: %s; Unit price: %s\n",
+                    counter, product.getName(), quantity, product.getPriceWithTax());
+            counter++;
+        }
+
+        System.out.printf("Number of pos.: %d\n", products.size());
+        System.out.printf("Total price: %s", getGrossTotal());
     }
 }

@@ -1,5 +1,7 @@
 package pl.edu.agh.mwo.invoice;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.math.BigDecimal;
 
 import org.hamcrest.Matchers;
@@ -149,5 +151,20 @@ public class InvoiceTest {
         int number1 = new Invoice().getNumber();
         int number2 = new Invoice().getNumber();
         Assert.assertThat(number1, Matchers.lessThan(number2));
+    }
+
+    @Test
+    public void testPrintWithOneProduct() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        invoice.setInvoiceNumber(1);
+        invoice.addProduct(new TaxFreeProduct("Owoce", new BigDecimal("200")));
+
+        invoice.print();
+
+        String expectedOutput  = "Invoice nr: 1\nPos. 1: Owoce; Quantity: 1; Unit price: 200\nNumber of pos.: 1\nTotal price: 200";
+
+        Assert.assertEquals(expectedOutput, outContent.toString());
     }
 }
